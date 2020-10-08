@@ -106,7 +106,12 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+      $user_auth = Auth::user();
       $services = Service::all();
+
+      if ($user_auth->id !== $apartment->user_id) {
+        abort('404');
+      }
 
       return view('upr.apartments.edit', compact('apartment', 'services'));
     }
