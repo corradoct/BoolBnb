@@ -80,11 +80,7 @@
             </div>
           </main>
 
-          <footer>
-            <div class="container">
-            </div>
-            IO SONO UN FOOTER
-          </footer>
+          @extends('layouts.partials.footer')
       </div>
     </body>
 

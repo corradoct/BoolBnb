@@ -1,0 +1,51 @@
+.card{
+  .card-img-top{
+    border-radius: 25px 25px 0 0 !important;
+  }
+  border-radius: 25px !important;
+}
+
+.cs-btn{
+  background-color: $accent !important;
+  color: white !important;
+  font-weight: bold;
+
+  &:hover{
+    transition: 0.2s;
+    transform: scale(1.1);
+  }
+}
+
+.cs-btn-login{
+  background-color: $accent !important;
+  color: white !important;
+  font-weight: bold;
+
+  &:hover{
+    transition: 0.2s;
+    background-color: $accent_dark;
+  }
+}
+
+.cs-btn-sec{
+  margin-left: 20px;
+  background-color: white;
+  color: $accent !important;
+  font-weight: bold;
+  border: 2px solid $sub_color;
+
+
+  &:hover{
+    transition: 0.2s;
+    background-color: #F7F7F7;
+  }
+}
+
+.cs-input{
+
+  i{
+    font-size: 20px;
+    padding: 10px;
+  }
+
+}

@@ -168,13 +168,14 @@ class ApartmentController extends Controller
     public function validationData() {
        return [
          'title' => 'required|max:255',
-         'content' => 'max:1000',
-         'rooms' => 'required|min:1|max:10',
-         'beds' => 'required|min:1|max:10',
-         'baths' => 'required|min:1|max:5',
+         'description' => 'required|max:1000',
+         'rooms' => 'required|numeric|min:1|max:10',
+         'beds' => 'required|numeric|min:1|max:10',
+         'baths' => 'required|numeric|min:1|max:10',
          'square_meters' => 'required|numeric|min:50|max:350',
-         'address' => 'required|max:300',
+         'address' => 'required|max:400',
          'image' => 'image',
+         'services' => 'required',
        ];
      }
 }
