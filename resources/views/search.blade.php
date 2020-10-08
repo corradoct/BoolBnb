@@ -1,0 +1,284 @@
+@extends('layouts.app')
+
+@section('content')
+
+  <body onload="searchApartments()">
+      <div id="app">
+          <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+              <div class="container">
+                  <a class="navbar-brand" href="{{ url('/') }}">
+                      {{ config('app.name', 'BoolBnb') }}
+                  </a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <!-- Left Side Of Navbar -->
+                      <ul class="navbar-nav mr-auto">
+
+                      </ul>
+
+                      <!-- Right Side Of Navbar -->
+                      <ul class="navbar-nav ml-auto">
+                          <!-- Authentication Links -->
+                          @guest
+                              <li class="nav-item">
+                                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                              </li>
+                              @if (Route::has('register'))
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                  </li>
+                              @endif
+                          @else
+                              <li class="nav-item dropdown">
+                                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                      {{ Auth::user()->name }}
+                                  </a>
+
+                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                      <a class="dropdown-item" href="{{ route('logout') }}"
+                                         onclick="event.preventDefault();
+                                                       document.getElementById('logout-form').submit();">
+                                          {{ __('Logout') }}
+                                      </a>
+
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                          @csrf
+                                      </form>
+                                  </div>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="{{ route('upr.home') }}">Dashboard</a>
+                              </li>
+                          @endguest
+                      </ul>
+                  </div>
+              </div>
+          </nav>
+
+          <main class="py-4">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div>
+                      HOME PAGE CON L INPUT DI RICERCA
+                      <div class="">
+                        <form class="" action="" method="post">
+                            @csrf
+                            @method ('GET')
+                          <div class="">
+                            <label for="address"></label>
+                            <input id="address" type="text" name="address" value="{{ $requestInfo['address'] }}">
+                          </div>
+
+                          <div class="">
+                            <input id="lat" type="hidden" name="lat" value="{{ $requestInfo['lat'] }}">
+                          </div>
+
+                          <div class="">
+                            <input id="lon" type="hidden" name="lon" value="{{ $requestInfo['lon'] }}">
+                          </div>
+
+                          <div class="">
+                            <label for="radius">Distanza:</label>
+                            <select id="radius" class="" name="radius">
+                              <option value="20">20km</option>
+                              <option value="30">30km</option>
+                              <option value="40">40km</option>
+                            </select>
+                          </div>
+
+                          <div class="">
+                            <input id="rooms" type="number" name="rooms" value="" placeholder="Inserisci le stanze">
+                          </div>
+
+                          <div class="">
+                            <input id="beds" type="number" name="beds" value="" placeholder="Inserisci i letti">
+                          </div>
+                          <div class="services">
+                            <div class="">
+                              <input id="wifi" type="checkbox" name="wifi" value="">
+                              <label for="wifi">Wi-fi</label>
+                            </div>
+
+                            <div class="">
+                              <input id="parking" type="checkbox" name="parking" value="">
+                              <label for="parking">Parcheggio</label>
+                            </div>
+
+                            <div class="">
+                              <input id="pool" type="checkbox" name="pool" value="">
+                              <label for="pool">Piscina</label>
+                            </div>
+
+                            <div class="">
+                              <input id="reception" type="checkbox" name="reception" value="">
+                              <label for="reception">Portineria</label>
+                            </div>
+
+                            <div class="">
+                              <input id="sauna" type="checkbox" name="sauna" value="">
+                              <label for="sauna">Sauna</label>
+                            </div>
+
+                            <div class="">
+                              <input id="seaView" type="checkbox" name="seaView" value="">
+                              <label for="seaView">Vista mare</label>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <button id="submit" type="button" name="button">Cerca</button>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+                  <div id="apartment_list"></div>
+                </div>
+              </div>
+              <div id="mapid"></div>
+            </div>
+
+          {{-- JS --}}
+
+
+            {{-- <script src="{{asset('js/search.js')}}"></script> --}}
+            <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+
+            <script>
+            (function() {
+                  var placesAutocomplete = places({
+                    appId: 'pl72UD0E1RWC',
+                    apiKey: '6f2ccdf8214af2f289be15103d07cf1c',
+                    container: document.querySelector('#address'),
+                  });
+                  var $address = document.querySelector('#address');
+                    placesAutocomplete.on('change', function(e) {
+                      document.querySelector("#address").value = e.suggestion.value || "";
+                      document.querySelector("#lat").value = e.suggestion.latlng.lat || "";
+                      document.querySelector("#lon").value = e.suggestion.latlng.lng || "";
+                    });
+                    placesAutocomplete.on('clear', function() {
+                      $address.textContent = 'none';
+                    });
+                })();
+            </script>
+
+            <script id="apartment-template" type="text/x-handlebars-template">
+              <div >
+                <h2> <a href="/apartments/@{{ id }}">Titolo : @{{ title }}</a> </h2>
+                <ul>
+                 <li>Descrizione : @{{ description }}</li>
+                 <li>Indirizzo : @{{ address }}</li>
+                 <li><img src=" {{ asset('storage') . '/'}}@{{{image}}} " alt=""></li>
+                </ul>
+              </div>
+            </script>
+
+            <script>
+            $( "#radius" ).change(function() {
+              searchApartments();
+            });
+
+            $(document).ready(function() {
+              $('#submit').click(function() {
+                searchApartments();
+               });
+            });
+
+            function searchApartments() {
+              var lat = $('#lat').val();
+              var lon = $('#lon').val();
+              var rad = $( "select#radius option:checked" ).val();
+              var rooms = $('#rooms').val();
+              var beds = $('#beds').val();
+              var wifi = $('#wifi').is(":checked") ? wifi = 'checked' : wifi = 'unchecked';;
+              var parking = $('#parking').is(":checked") ? parking = 'checked' : parking = 'unchecked';
+              var pool = $('#pool').is(":checked") ? pool = 'checked' : pool = 'unchecked';
+              var reception = $('#reception').is(":checked") ? reception = 'checked' : reception = 'unchecked';
+              var sauna = $('#sauna').is(":checked") ? sauna = 'checked' : sauna = 'unchecked';
+              var seaView = $('#seaView').is(":checked") ? seaView = 'checked' : seaView = 'unchecked';
+              console.log(lat);
+              console.log(lon);
+              console.log(rad);
+              console.log(rooms);
+              console.log(beds);
+              console.log(wifi);
+              console.log(parking);
+              console.log(pool);
+              console.log(reception);
+              console.log(sauna);
+              console.log(seaView);
+
+                $.ajax(
+                   {
+                     url: 'http://127.0.0.1:8000/api/search',
+                     method: 'GET',
+                     data: {
+                       lat: lat,
+                       lon: lon,
+                       rad: rad,
+                       rooms: rooms,
+                       beds: beds,
+                       wifi: wifi,
+                       parking: parking,
+                       pool: pool,
+                       reception: reception,
+                       sauna: sauna,
+                       seaView: seaView,
+                     },
+                     success: function(dataResponse) {
+                       console.log(dataResponse);
+                       $('#apartment_list').html('');
+
+                       var allApartments = dataResponse.noPromo;
+                       console.log(allApartments.length);
+
+                       var source = $("#apartment-template").html();
+                       console.log(source);
+                       var template = Handlebars.compile(source);
+
+                       for (var i = 0; i < allApartments.length; i++) {
+                         var thisApartment = allApartments[i];
+
+                         var html = template(thisApartment);
+                         $('#apartment_list').append(html);
+                       }
+                     },
+                     error: function() {
+                       alert('error');
+                     }
+                   }
+                 );
+
+              }
+            </script>
+          </main>
+
+          <footer>
+            <div class="container">
+            </div>
+            IO SONO UN FOOTER
+          </footer>
+      </div>
+
+      <script type="text/javascript">
+        var mymap = L.map('mapid').setView([{{ $requestInfo['lat'] }}, {{ $requestInfo['lon'] }}], 10);
+        var marker = L.marker([{{ $requestInfo['lat'] }} ,  {{ $requestInfo['lon'] }} ]).addTo(mymap);
+
+
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiY29ycmFkb2N0IiwiYSI6ImNrZm51YmF0NDBlZTQyeW9lYmpyNGpzcGYifQ.A43eZmLSH1fCHbMCGtG_Zg'
+        }).addTo(mymap);
+      </script>
+
+    </body>
+@endsection
