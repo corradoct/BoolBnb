@@ -2,51 +2,96 @@
 
 @section('content')
   <section class="justify-content-around cs-space">
-    <div class="container">
-      <h1>Ecco i tuoi appartamenti registrati</h1>
+    <div class="container d-flex flex-column">
+      <h4 class="mb-3 text-center">I tuoi appartamenti</h4>
 
-      <a href="{{ route('upr.apartments.create') }}">Crea un nuovo appartamento</a>
-      oppure
-      <a href="/">Vai all' Homepage</a>
+      <a class="mb-5 btn cs-btn align-self-center" href="{{ route('upr.apartments.create') }}">Crea un nuovo appartamento</a>
+      
+      <a class="mb-5 btn cs-btn align-self-center" href="/">Vai all' Homepage</a>
 
-      @foreach ($apartments as $apartment)
-        @if ($user->id == $apartment->user_id)
-          <div class="">
-            <h2>
-              <a href="{{route('upr.apartments.show', $apartment)}}">Appartamento {{ $apartment->id }}</a>
-            </h2>
-            <ul>
-              <li>
-                <h3>Titolo:</h3>
-                {{ $apartment->title }}
-              </li>
-              {{-- <li>
-                <h3>Prezzo:</h3>
-                {{ $apartment->price }} €
-              </li> --}}
-              <li>
-                <img src=" {{ asset('storage') . '/' . $apartment->image }} " alt="{{$apartment->title}}">
-              </li>
-            </ul>
-            <div>
-              <form class="delete" action="{{ route('upr.apartments.destroy', $apartment) }}" method="post">
-              @csrf
-              @method('DELETE')
-                <input type="submit" value="Elimina">
-              </form>
-              <button type="button" name="button"><a href="{{ route('upr.message', $apartment) }}">Leggi i messaggi</a></button>
-              <button type="button" name="button"><a href="{{ route('upr.apartments.edit', $apartment) }}">Modifica annuncio</a></button>
+      <div class="d-xs-flex flex-column cs-apartments-container">
+        <div class="row justify-content-center justify-content-md-between">
+          @foreach ($apartments as $apartment)
+            @if ($user->id == $apartment->user_id)
+              <!-- Apartment Card -->
+              <div class="card my-3" style="width: 20rem;">
 
-              <form class="sospend" action="{{ route('upr.sospend', $apartment) }}" method="post">
-              @csrf
-              @method('PUT')
-                <input id="sospendValue" type="hidden" name="active" value="{{ ($apartment->active == 0) ? 1 : 0  }}">
-                <input id="sospendButton" type="submit" value="{{ ($apartment->active == 0) ? 'Attiva' : 'Sospendi' }}">
-              </form>
-            </div>
-          </div>
-        @endif
-      @endforeach
+                    <!-- Apartment Img -->
+                    <img class="card-img-top" src="{{ asset('storage') . '/' . $apartment->image }} " alt="{{$apartment->title}}">
+
+                    <!-- Apartment Text -->
+                    <div class="card-body d-flex flex-column">
+
+                      <!-- Apartment Title -->
+                      <h5 class="card-title text-center text-uppercase"><a href="{{route('upr.apartments.show', $apartment)}}">{{$apartment->title}}</a></h5>
+
+                      <!-- Apartment Desc -->
+                      <p class="card-text text-truncate">{{$apartment->description}}</p>
+
+                      <!-- Apartment Adress -->
+                      <p class="cs-address text-truncate font-italic"><i class="mr-2 fas fa-map-marker-alt"></i>{{$apartment->address}}</p>
+
+                      <!-- Apartment Specs -->
+                      <div class="cs-apartment-specs d-flex justify-content-between">
+
+                        @if ($apartment->beds == 1)
+                          <p class="card-text">{{$apartment->beds}} Letto </p>
+                        @else
+                          <p class="card-text">{{$apartment->beds}} Letti </p>
+                        @endif
+
+
+                        <span>&middot;</span>
+
+                        @if ($apartment->rooms == 1)
+                          <p class="card-text">{{$apartment->rooms}} Camera </p>
+                        @else
+                          <p class="card-text">{{$apartment->rooms}} Camere </p>
+                        @endif
+
+                        <span>&middot;</span>
+
+                        @if ($apartment->baths == 1)
+                          <p class="card-text">{{$apartment->baths}} Bagno </p>
+                        @else
+                          <p class="card-text">{{$apartment->baths}} Bagni </p>
+                        @endif
+
+                      </div>
+
+                      <!-- Apartment Actions -->
+                      <div class="d-flex flex-column justify-content-around text-center">
+
+                        <!-- Stop Button -->
+                        <form class="sospend" action="{{ route('upr.sospend', $apartment) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                          <input id="sospendValue" type="hidden" name="active" value="{{ ($apartment->active == 0) ? 1 : 0  }}">
+                          <input id="sospendButton" type="submit" value="{{ ($apartment->active == 0) ? 'Attiva' : 'Sospendi' }}">
+                        </form>
+
+                        <!-- Message Button -->
+                        <a href="{{ route('upr.message', $apartment) }}">Messaggi</a>
+
+                        <!-- Edit Button -->
+                        <a href="{{ route('upr.apartments.edit', $apartment) }}" >Modifica</a>
+
+                        <!-- Delete Button -->
+                        <form class="delete" action="{{ route('upr.apartments.destroy', $apartment) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                          <input class="btn cs-btn cs-btn-delete" type="submit" value="Elimina">
+                        </form>
+
+                      </div>
+                      <!-- End Apartment Actions -->
+                    </div>
+                  </div>
+              <!-- End Apartment Card -->
+            @endif
+          @endforeach
+        </div>
+      </div>
     </div>
   </section>
 @endsection
