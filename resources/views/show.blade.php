@@ -6,10 +6,6 @@
     <!-- Apartment Container -->
     <div class="container">
 
-      <div class="navbar navbar-expand-sm navbar-expand-sm shadow-sm cs-back">
-        <a href="{{ route('search') }}"> < Torna alla ricerca</a>
-      </div>
-
       <h1>Appartamento {{ $apartment->id }}</h1>
 
       <div class="">
@@ -68,7 +64,7 @@
 
           <div>
             <label for="email">Email</label>
-            <input id="emailMessage"  type="email" name="email" value= "" placeholder="Inserisci la mail" required>
+            <input id="emailMessage"  type="email" name="email" value= "{{ $isUserAuth ? $user_auth->email : '' }}" placeholder="Inserisci la mail" required>
           </div>
 
           <div>
@@ -84,7 +80,7 @@
       </div>
     @else
       @if ($user_auth->id === $apartment->user_id)
-        <a href="{{ route('upr.messages.index') }}">Leggi i messaggi ricevuti</a>
+        <a href="{{ route('upr.message', $apartment) }}">Leggi i messaggi ricevuti</a>
       @endif
     @endif
 

@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Upr;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Apartment;
 use App\User;
 use App\Service;
+use App\Message;
+use App\Sponsorship;
+use Carbon\Carbon;
 
 class ApartmentController extends Controller
 {
@@ -94,8 +97,10 @@ class ApartmentController extends Controller
       $users = User::all();
       $services = Service::all();
       $user_auth = Auth::user();
+      $sponsorships = Sponsorship::all();
+      $now = Carbon::now('Europe/Rome');
       // dd($users)
-      return view('upr.apartments.show', compact('apartment', 'users', 'services', 'user_auth'));
+      return view('upr.apartments.show', compact('apartment', 'users', 'services', 'user_auth', 'sponsorships', 'now'));
     }
 
     /**
@@ -150,7 +155,7 @@ class ApartmentController extends Controller
 
     $apartment->update($request_data);
 
-    // Mail::to($post->user->email)->send(new PostEditedMail());
+
 
     return redirect()->route('upr.apartments.show', $apartment);
     }
@@ -170,6 +175,60 @@ class ApartmentController extends Controller
        return redirect()->route('upr.apartments.index');
     }
 
+    public function message(Apartment $apartment)
+    {
+      $user = Auth::user();
+      $messages = Message::all();
+
+      return view('upr.messages.index', compact('user', 'messages', 'apartment'));
+    }
+
+    public function sospend(Request $request, Apartment $apartment)
+    {
+      if (!Auth::check()) {
+      abort('404');
+    }
+      $request_data = $request['active'];
+
+      $apartment->update(['active' => $request_data]);
+
+      return redirect()->route('upr.apartments.index', compact('apartment'));
+    }
+
+    public function sponsorship(Request $request, Apartment $apartment)
+    {
+      if (!Auth::check()) {
+        abort('404');
+      }
+
+      // Validazione
+      $request->validate($this->validationSponsorship());
+
+
+      $request_data = $request->all();
+      $sponsor_id = $request_data['sponsorships'];
+      // dd($sponsor_id);
+      $apart_id = $apartment->id;
+      $start_date = Carbon::now('Europe/Rome');
+      $now = Carbon::now('Europe/Rome');
+
+      if ($sponsor_id == 1) {
+        $end_date = $now->add(1, 'day');
+      } elseif ($sponsor_id == 2) {
+        $end_date = $now->add(3, 'day');
+      } elseif ($sponsor_id == 3) {
+        $end_date = $now->add(6, 'day');
+      }
+      // dd($end_date);
+
+      if (isset($request_data['sponsorships'])) {
+        $insertData=DB::table('apartment_sponsorship')
+          ->insert(['start_date' => $start_date, 'apartment_id' => $apart_id, 'sponsorship_id' => $sponsor_id, 'end_date' => $end_date]);
+      }
+
+      return redirect()->route('upr.apartments.show', $apartment);
+    }
+
     public function validationData() {
        return [
          'title' => 'required|max:255',
@@ -183,4 +242,10 @@ class ApartmentController extends Controller
          'services' => 'required',
        ];
      }
+
+     public function validationSponsorship() {
+        return [
+          'sponsorships' => 'required',
+        ];
+      }
 }

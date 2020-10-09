@@ -30,6 +30,7 @@ class CreateApartmentsTable extends Migration
             $table->decimal('lon', 6, 4)->nullable();
             $table->decimal('price', 5, 2)->nullable();
             $table->text('image');
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }

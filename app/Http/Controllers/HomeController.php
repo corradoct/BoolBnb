@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Apartment;
 use App\User;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -27,9 +28,9 @@ class HomeController extends Controller
 
     public function index() {
 
-      $user_auth = Auth::user();
-      // $users = User::all();
+      $apartments = Apartment::all();
+      $now = Carbon::now('Europe/Rome');
 
-      return view ('upr.index', compact('user_auth'));
+      return view ('homepage', compact('apartments', 'now'));
     }
 }

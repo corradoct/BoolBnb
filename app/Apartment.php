@@ -18,9 +18,8 @@ class Apartment extends Model
       'lon',
       'price',
       'image',
+      'active',
       'user_id',
-      'city',
-      'country',
     ];
 
     public function user() {
@@ -28,7 +27,7 @@ class Apartment extends Model
     }
 
     public function sponsorships() {
-        return $this->belongsToMany('App\Sponsorship');
+        return $this->belongsToMany('App\Sponsorship')->withPivot('apartment_id', 'sponsorship_id', 'start_date', 'end_date');
     }
 
     public function services() {

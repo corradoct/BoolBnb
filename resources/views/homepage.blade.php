@@ -38,13 +38,13 @@
                       });
                       var address = document.querySelector('#address-value')
                       placesAutocomplete.on('change', function(e) {
-                        console.log(placesAutocomplete);
+                        // console.log(placesAutocomplete);
                           $('#address').val(e.suggestion.value);
                           $('#lat').val(e.suggestion.latlng.lat);
                           $('#lon').val(e.suggestion.latlng.lng);
 
-                          console.log("latitudine: ", $('#lat').val());
-                          console.log("longitudine: ", $('#lon').val());
+                          // console.log("latitudine: ", $('#lat').val());
+                          // console.log("longitudine: ", $('#lon').val());
                       });
                       placesAutocomplete.on('clear', function() {
                           //$address.textContent = 'none';
@@ -77,48 +77,25 @@
       <!-- First Row -->
       <div class="row justify-content-center justify-content-md-between">
 
-        <!-- Single Sponsored Apartment-->
-        <div class="card my-3" style="width: 18rem;">
-          <!-- Apartment Img -->
-          <img class="card-img-top" src="https://st3.idealista.it/news/archivie/2019-08/casa_malaga_fachada.jpg?sv=dFqJvXT7" alt="Apartment image">
-          <!-- Apartment Text -->
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-center">Apartment title</h5>
-            <p class="card-text">Apartment Description</p>
-            <p class="card-text">Apartment Location</p>
-            <a href="#" class="btn cs-btn align-self-center">SCOPRI</a>
-          </div>
-        </div>
-        <!-- End Single apartment-->
+        @foreach ($apartments as $apartment)
+          @if (!$apartment->sponsorships->isEmpty() && $apartment->active == 1 && $apartment->sponsorships[0]->pivot->end_date > $now)
 
 
-        <!-- Single Sponsored Apartment-->
-        <div class="card my-3" style="width: 18rem;">
-          <!-- Apartment Img -->
-          <img class="card-img-top" src="https://st3.idealista.it/news/archivie/2019-08/casa_malaga_fachada.jpg?sv=dFqJvXT7" alt="Apartment image">
-          <!-- Apartment Text -->
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-center">Apartment title</h5>
-            <p class="card-text">Apartment Description</p>
-            <p class="card-text">Apartment Location</p>
-            <a href="#" class="btn cs-btn align-self-center">SCOPRI</a>
-          </div>
-        </div>
-        <!-- End Single apartment-->
-
-        <!-- Single Sponsored Apartment-->
-        <div class="card my-3" style="width: 18rem;">
-          <!-- Apartment Img -->
-          <img class="card-img-top" src="https://st3.idealista.it/news/archivie/2019-08/casa_malaga_fachada.jpg?sv=dFqJvXT7" alt="Apartment image">
-          <!-- Apartment Text -->
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-center">Apartment title</h5>
-            <p class="card-text">Apartment Description</p>
-            <p class="card-text">Apartment Location</p>
-            <a href="#" class="btn cs-btn align-self-center">SCOPRI</a>
-          </div>
-        </div>
-        <!-- End Single apartment-->
+            <!-- Single Sponsored Apartment-->
+            <div class="card my-3" style="width: 18rem;">
+              <!-- Apartment Img -->
+              <img class="card-img-top" src=" {{ asset('storage') . '/' . $apartment->image }} " alt="Apartment image">
+              <!-- Apartment Text -->
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">{{ $apartment->title }}</h5>
+                <p class="card-text">{{ $apartment->description }}</p>
+                <p class="card-text">{{ $apartment->address }}</p>
+                <a href="{{ route('apartments.show', $apartment) }}" class="btn cs-btn align-self-center">SCOPRI</a>
+              </div>
+            </div>
+            <!-- End Single apartment-->
+          @endif
+        @endforeach
 
       </div>
       <!-- End First Row -->

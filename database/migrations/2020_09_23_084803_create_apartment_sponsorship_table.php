@@ -23,7 +23,7 @@ class CreateApartmentSponsorshipTable extends Migration
             $table->foreign('sponsorship_id')
                   ->references('id')
                   ->on('sponsorships');
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
         });
     }
 

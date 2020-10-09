@@ -9,7 +9,7 @@
     </div>
 
     <div class="">
-      <h2>Hai <a href="{{route('upr.messages.index')}}">1</a>  nuovo messaggio da leggere </h2>
+      {{-- <h2>Hai <a href="{{route('upr.message', $apartment)}}">1</a>  nuovo messaggio da leggere </h2> --}}
     </div>
 
     <div class="">

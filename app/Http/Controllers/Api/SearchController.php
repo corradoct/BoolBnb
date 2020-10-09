@@ -12,6 +12,7 @@ class SearchController extends Controller
 {
   public function view(Apartment $apartment, Request $request) {
 
+    $active = $request->input('active');
     $rooms = $request->input('rooms');
     $beds = $request->input('beds');
     $lat = $request->input('lat');
@@ -34,7 +35,7 @@ class SearchController extends Controller
 
     $querySuite = Apartment::query();
 
-    $querySuite->whereBetween('lat', [$params['minLat'], $params['maxLat']]);
+    $querySuite->whereBetween('lat', [$params['minLat'], $params['maxLat']])->orderBy('lat', 'ASC');
     $querySuite->whereBetween('lon', [$params['minLon'], $params['maxLon']]);
 
     if ($wifi == 'checked') {
@@ -71,6 +72,10 @@ class SearchController extends Controller
       $querySuite->whereHas('services', function (Builder $query) {
         $query->where('service_id', '=', '6');
       });
+    }
+
+    if ($active) {
+      $querySuite->where('active', "=", 1);
     }
 
     if ($rooms) {

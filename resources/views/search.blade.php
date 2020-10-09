@@ -89,7 +89,7 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('upr.home') }}">Dashboard</a>
+                  <a class="nav-link" href="{{ route('upr.apartments.index') }}">Dashboard</a>
                 </li>
               @endguest
             </ul>
@@ -203,9 +203,10 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <!-- Map Container -->
-                <div id="mapid"></div>
-                <!-- End Map Container -->
+                <div class="containerMap">
+                  <!-- Map Container -->
+                  <div id="mapid"></div>
+                  <!-- End Map Container --></div>
               </div>
             </div>
           </div>
@@ -275,6 +276,7 @@
     });
 
     function searchApartments() {
+      var active = 1;
       var lat = $('#lat').val();
       var lon = $('#lon').val();
       var rad = $( "select#radius option:checked" ).val();
@@ -286,23 +288,24 @@
       var reception = $('#reception').is(":checked") ? reception = 'checked' : reception = 'unchecked';
       var sauna = $('#sauna').is(":checked") ? sauna = 'checked' : sauna = 'unchecked';
       var seaView = $('#seaView').is(":checked") ? seaView = 'checked' : seaView = 'unchecked';
-      console.log(lat);
-      console.log(lon);
-      console.log(rad);
-      console.log(rooms);
-      console.log(beds);
-      console.log(wifi);
-      console.log(parking);
-      console.log(pool);
-      console.log(reception);
-      console.log(sauna);
-      console.log(seaView);
+      // console.log(lat);
+      // console.log(lon);
+      // console.log(rad);
+      // console.log(rooms);
+      // console.log(beds);
+      // console.log(wifi);
+      // console.log(parking);
+      // console.log(pool);
+      // console.log(reception);
+      // console.log(sauna);
+      // console.log(seaView);
 
         $.ajax(
          {
            url: 'http://127.0.0.1:8000/api/search',
            method: 'GET',
            data: {
+             active: active,
              lat: lat,
              lon: lon,
              rad: rad,
@@ -316,22 +319,11 @@
              seaView: seaView,
            },
            success: function(dataResponse) {
-             console.log(dataResponse);
-             $('#apartment_list').html('');
-
-             var allApartments = dataResponse.noPromo;
-             console.log(allApartments.length);
-
-             var source = $("#apartment-template").html();
-             console.log(source);
-             var template = Handlebars.compile(source);
-
-             for (var i = 0; i < allApartments.length; i++) {
-               var thisApartment = allApartments[i];
-
-               var html = template(thisApartment);
-               $('#apartment_list').append(html);
-             }
+             // console.log(dataResponse);
+             printHandlebars(dataResponse);
+             $('#mapid').remove();
+             $('.containerMap').html('<div id="mapid"></div>');
+             printMap(dataResponse);
            },
            error: function() {
              alert('error');
@@ -342,12 +334,47 @@
     </script>
     {{-- End chiamata Ajax per API --}}
 
+
+    <script>
+      function printHandlebars(dataResponse) {
+        $('#apartment_list').html('');
+
+        var allApartments = dataResponse.noPromo;
+        // console.log(allApartments.length);
+
+        var source = $("#apartment-template").html();
+        // console.log(source);
+        var template = Handlebars.compile(source);
+
+        if (allApartments.length != 0) {
+          for (var i = 0; i < allApartments.length; i++) {
+            var thisApartment = allApartments[i];
+            // console.log(thisApartment.lat);
+
+            var html = template(thisApartment);
+            $('#apartment_list').append(html);
+          }
+        } else {
+          $('#apartment_list').html('<h2>Non ci sono appartamenti corrispondenti alla ricerca</h2>');
+        }
+      }
+    </script>
+
+
     {{-- Script per mappa --}}
     <script>
-      var mymap = L.map('mapid').setView([{{ $requestInfo['lat'] }}, {{ $requestInfo['lon'] }}], 10);
-      var marker = L.marker([{{ $requestInfo['lat'] }} ,  {{ $requestInfo['lon'] }} ]).addTo(mymap);
 
-
+    function printMap(dataResponse) {
+      var latitude = $('#lat').val();
+      var longitude = $('#lon').val();
+      var mymap = L.map('mapid').setView([latitude, longitude], 10);
+      var data = dataResponse.noPromo;
+      console.log(data);
+      for (var i = 0; i < data.length; i++) {
+        var thisMarker = data[i];
+        var marker = L.marker([ thisMarker.lat  ,   thisMarker.lon  ]).addTo(mymap);
+        marker.bindPopup(thisMarker.title + '<br>' + thisMarker.address);
+      }
 
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -357,6 +384,9 @@
       zoomOffset: -1,
       accessToken: 'pk.eyJ1IjoiY29ycmFkb2N0IiwiYSI6ImNrZm51YmF0NDBlZTQyeW9lYmpyNGpzcGYifQ.A43eZmLSH1fCHbMCGtG_Zg'
       }).addTo(mymap);
+    }
+
+
     </script>
     {{-- End Script per mappa --}}
 

@@ -14,15 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // questa route porta alla Homepage
-Route::get('/', function () {
-    return view('homepage');
-});
+Route::get('/', 'HomeController@index');
 
 // routes di default per le autenticazioni
 Auth::routes();
-
-// route per le autenticazioni degli utenti
-Route::get('/upr', 'HomeController@index')->name('upr.home');
 
 // routes per gli utenti registrati (upr)
 Route::prefix('upr')
@@ -31,7 +26,9 @@ Route::prefix('upr')
     ->name('upr.')
     ->group(function () {
       Route::resource('apartments', 'ApartmentController');
-      Route::resource('messages', 'MessageController')->except('store');
+      Route::get('/messages/{apartment}', 'ApartmentController@message')->name('message');
+      Route::put('apartments/{apartment}', 'ApartmentController@sospend')->name('sospend');
+      Route::post('apartments/{apartment}', 'ApartmentController@sponsorship')->name('sponsorship');
     });
 
 // routes per gli utenti non registrati

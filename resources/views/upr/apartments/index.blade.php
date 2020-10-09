@@ -6,8 +6,8 @@
       <h1>Ecco i tuoi appartamenti registrati</h1>
 
       <a href="{{ route('upr.apartments.create') }}">Crea un nuovo appartamento</a>
-      {{-- oppure
-      <a href="{{ route('apartments.index') }}">Visita gli appartamenti già presenti</a> --}}
+      oppure
+      <a href="/">Vai all' Homepage</a>
 
       @foreach ($apartments as $apartment)
         @if ($user->id == $apartment->user_id)
@@ -33,6 +33,15 @@
               @csrf
               @method('DELETE')
                 <input type="submit" value="Elimina">
+              </form>
+              <button type="button" name="button"><a href="{{ route('upr.message', $apartment) }}">Leggi i messaggi</a></button>
+              <button type="button" name="button"><a href="{{ route('upr.apartments.edit', $apartment) }}">Modifica annuncio</a></button>
+
+              <form class="sospend" action="{{ route('upr.sospend', $apartment) }}" method="post">
+              @csrf
+              @method('PUT')
+                <input id="sospendValue" type="hidden" name="active" value="{{ ($apartment->active == 0) ? 1 : 0  }}">
+                <input id="sospendButton" type="submit" value="{{ ($apartment->active == 0) ? 'Attiva' : 'Sospendi' }}">
               </form>
             </div>
           </div>

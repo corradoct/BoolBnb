@@ -89,7 +89,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="{{ route('upr.home') }}">Dashboard</a>
+                              <a class="nav-link" href="{{ route('upr.apartments.index') }}">Dashboard</a>
                             </li>
                         @endguest
                     </ul>
