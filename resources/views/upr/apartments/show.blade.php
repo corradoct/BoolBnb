@@ -8,31 +8,25 @@
           <div class="col-6 sponsor">
             <h2>Rendi il tuo annuncio più visibile</h2>
             <div class="box">
-              <form class="" action="{{ route('upr.sponsorship', $apartment) }}" method="post">
+              <form id="sponsor_form" class="" action="{{ route('upr.sponsorship', $apartment) }}" method="post">
                 @csrf
                 @method ('POST')
                 <div class="chekboxes">
-                  <input id="controll" type="hidden" name="controll" value="" required>
                   <span>Pacchetti:</span>
                   @foreach ($sponsorships as $sponsorship)
                     <div>
-                      <input type="radio" name="sponsorships" value="{{ $sponsorship->id }}" required>
+                      <input type="radio" name="sponsorships" value="{{ $sponsorship->id }}" checked required>
                       <label>{{$sponsorship->name}} - {{ $sponsorship->price }} € - {{ $sponsorship->duration }} ore</label>
                     </div>
                   @endforeach
                 </div>
                 <div class="">
                   <div id="dropin-container"></div>
-                  <button  id="submit-button">Request payment method</button>
-                  {{-- <button type="submit" name="button">Sponsorizza</button> --}}
+                  <button type="button" id="submit-button">Request payment method</button>
                 </div>
               </form>
             </div>
           </div>
-          {{-- <div class="col-6 payments">
-            <div id="dropin-container"></div>
-            <button id="submit-button">Request payment method</button>
-          </div> --}}
           @else
           <div class="col-12">
             <h2>Appartamento sponsorizzato</h2>
@@ -134,7 +128,7 @@
         instance.requestPaymentMethod(function (err, payload) {
           $.get('{{ route('upr.payment.make') }}', {payload}, function (response) {
             if (response.success) {
-              $('#controll').val('1');
+              $("#sponsor_form").submit();
             } else {
               alert('Payment failed');
             }

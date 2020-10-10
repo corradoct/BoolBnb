@@ -207,7 +207,6 @@ class ApartmentController extends Controller
 
       $request_data = $request->all();
       $sponsor_id = $request_data['sponsorships'];
-      $controll = $request_data['controll'];
       $apart_id = $apartment->id;
       $start_date = Carbon::now('Europe/Rome');
       $now = Carbon::now('Europe/Rome');
@@ -219,11 +218,10 @@ class ApartmentController extends Controller
       } elseif ($sponsor_id == 3) {
         $end_date = $now->add(6, 'day');
       }
-      // dd($end_date);
 
       if (isset($request_data['sponsorships'])) {
         $insertData=DB::table('apartment_sponsorship')
-          ->insert(['start_date' => $start_date, 'apartment_id' => $apart_id, 'sponsorship_id' => $sponsor_id, 'end_date' => $end_date, 'controll' => $controll]);
+          ->insert(['start_date' => $start_date, 'apartment_id' => $apart_id, 'sponsorship_id' => $sponsor_id, 'end_date' => $end_date]);
       }
 
       return redirect()->route('upr.apartments.show', $apartment);
