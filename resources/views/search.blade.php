@@ -43,7 +43,7 @@
 </head>
   <body onload="searchPromo(); searchApartments();">
     <div id="app">
-      <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+      <nav class="fixed-top navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
           <a class="navbar-brand" href="{{ url('/') }}">
               <img id="logo" src="{{ asset('storage/images/logo.png')}}" alt="Airbnb Logo">
@@ -97,84 +97,119 @@
         </div>
       </nav>
 
-      <main class="py-4">
+      <main>
         <!-- Search Section -->
         <section class="justify-content-around cs-space">
           <!-- Search Container -->
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <div class="title m-b-md">
-                  <div class="">
-                    <form class="cs-input d-flex flex-row" action="" method="post">
+                <div class="cs-search-input container">
+                  <!-- Search Form Container-->
+                  <div class="form-container">
+                    <form class="container" action="" method="post">
                         @csrf
                         @method ('GET')
-                      <div class="">
-                        <label for="address"></label>
-                        <input id="address" type="text" name="address" value="{{ $requestInfo['address'] }}">
-                      </div>
 
-                      <div class="">
-                        <input id="lat" type="hidden" name="lat" value="{{ $requestInfo['lat'] }}">
-                      </div>
-
-                      <div class="">
-                        <input id="lon" type="hidden" name="lon" value="{{ $requestInfo['lon'] }}">
-                      </div>
-
-                      <div class="">
-                        <label for="radius">Distanza:</label>
-                        <select id="radius" class="" name="radius">
-                          <option value="20">20km</option>
-                          <option value="30">30km</option>
-                          <option value="40">40km</option>
-                        </select>
-                      </div>
-
-                      <div class="">
-                        <input id="rooms" type="number" name="rooms" value="" placeholder="Inserisci le stanze">
-                      </div>
-
-                      <div class="">
-                        <input id="beds" type="number" name="beds" value="" placeholder="Inserisci i letti">
-                      </div>
-                      <div class="services">
-                        <div class="">
-                          <input id="wifi" type="checkbox" name="wifi" value="">
-                          <label for="wifi">Wi-fi</label>
+                      <!-- Searchbar Container-->
+                      <div class="mb-3 d-flex align-items-center justify-content-between">
+                        <!-- Searchbar-->
+                        <div class="container">
+                          {{-- <label for="address"></label> --}}
+                          <input class="container cs-city" id="address" type="text" name="address" value="{{ $requestInfo['address'] }}">
+                          <div class="">
+                            <input id="lat" type="hidden" name="lat" value="{{ $requestInfo['lat'] }}">
+                          </div>
+                          <div class="">
+                            <input id="lon" type="hidden" name="lon" value="{{ $requestInfo['lon'] }}">
+                          </div>
                         </div>
 
-                        <div class="">
-                          <input id="parking" type="checkbox" name="parking" value="">
-                          <label for="parking">Parcheggio</label>
-                        </div>
-
-                        <div class="">
-                          <input id="pool" type="checkbox" name="pool" value="">
-                          <label for="pool">Piscina</label>
-                        </div>
-
-                        <div class="">
-                          <input id="reception" type="checkbox" name="reception" value="">
-                          <label for="reception">Portineria</label>
-                        </div>
-
-                        <div class="">
-                          <input id="sauna" type="checkbox" name="sauna" value="">
-                          <label for="sauna">Sauna</label>
-                        </div>
-
-                        <div class="">
-                          <input id="seaView" type="checkbox" name="seaView" value="">
-                          <label for="seaView">Vista mare</label>
-                        </div>
+                        <!-- Button-->
+                        {{-- <div class="search-button">
+                          <button class="cs-btn cs-btn-search" id="submit" type="button" name="button"><i class="fas fa-search"></i></button>
+                        </div> --}}
                       </div>
+                      <!-- End Searchbar Container-->
 
-                      <div class="">
-                        <button class="cs-btn cs-btn-search" id="submit" type="button" name="button"><i class="fas fa-search"></i></button>
+
+                      <!-- Filters Toggle-->
+                      <span id="filters">Filtri di ricerca <i id="arrow" class="fas fa-chevron-down"></i></span>
+
+                      <!-- Filters Section-->
+                      <div class="cs-filters d-none">
+
+                        <!-- First Row filters -->
+                        <div class="row cs-rooms d-flex col-12 col-sm-6 justify-content-between">
+
+                          <!-- Distance -->
+                          <div class="">
+                            <label for="radius">Distanza:</label>
+                            <select id="radius" class="" name="radius">
+                              <option value="20">20km</option>
+                              <option value="30">30km</option>
+                              <option value="40">40km</option>
+                            </select>
+                          </div>
+
+                          <!-- Rooms -->
+                          <div class="cs-sec-input">
+                            <input id="rooms" min="1" max="10" type="number" name="rooms" value="" placeholder="Inserisci le stanze">
+                          </div>
+
+                          <!-- Baths -->
+                          <div class="cs-sec-input">
+                            <input id="beds" min="1" max="10" type="number" name="beds" value="" placeholder="Inserisci i letti">
+                          </div>
+                        </div>
+                        <!-- End First Row Filters -->
+
+                        <!-- Second Row filters -->
+                        <div class="row cs-services d-flex justify-content-between">
+
+                          <!-- Wifi -->
+                          <div class="cs-single-service">
+                            <input id="wifi" type="checkbox" name="wifi" value="">
+                            <label for="wifi">Wi-fi</label>
+                          </div>
+
+                          <!-- Parking -->
+                          <div class="cs-single-service">
+                            <input id="parking" type="checkbox" name="parking" value="">
+                            <label for="parking">Parcheggio</label>
+                          </div>
+
+                          <!-- Pool -->
+                          <div class="cs-single-service">
+                            <input id="pool" type="checkbox" name="pool" value="">
+                            <label for="pool">Piscina</label>
+                          </div>
+
+                          <!-- Reception -->
+                          <div class="cs-single-service">
+                            <input id="reception" type="checkbox" name="reception" value="">
+                            <label for="reception">Portineria</label>
+                          </div>
+
+                          <!-- Sauna -->
+                          <div class="cs-single-service">
+                            <input id="sauna" type="checkbox" name="sauna" value="">
+                            <label for="sauna">Sauna</label>
+                          </div>
+
+                          <!-- Sea View -->
+                          <div class="cs-single-service">
+                            <input id="seaView" type="checkbox" name="seaView" value="">
+                            <label for="seaView">Vista mare</label>
+                          </div>
+                        </div>
+                        <!-- End Second Row filters -->
+
                       </div>
+                      <!-- End Filters Section-->
                     </form>
                   </div>
+                  <!-- End Search Form Container-->
                 </div>
               </div>
             </div>
@@ -285,10 +320,19 @@
     });
 
     $(document).ready(function() {
-      $('#submit').click(function() {
-        searchApartments();
-       });
+      $( "input" ).change(function() {
+      searchApartments();
     });
+       $("#filters").click(function(){
+         $(".cs-filters").toggleClass("d-none");
+       })
+    });
+
+    // $(document).ready(function() {
+    //   $('#submit').click(function() {
+    //     searchApartments();
+    //    });
+    // });
 
     function searchPromo() {
       var sponsors = 1;
@@ -409,8 +453,6 @@
             var html = template(thisApartment);
             $('#apartment_list_promo').append(html);
           }
-        } else {
-          $('#apartment_list_promo').html('<h2>Non ci sono appartamenti sponsorizzati</h2>');
         }
       }
     </script>

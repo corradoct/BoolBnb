@@ -12,12 +12,12 @@
     </div>
     <!-- End Section title -->
     <div class="cs-input d-flex flex-row">
-      <form action="{{ route('search')}}" method="post">
+      <form class="container" action="{{ route('search')}}" method="post">
           @csrf
           @method('GET')
-          <div class="form-group">
+          <div class="form-group d-flex flex-row align-items-center">
 
-              <div class="where-bar">
+              <div class="container">
                 <input type="search" id="address" name="address" placeholder="Dove vuoi andare?">
                 <input type="hidden" id="lat" name="lat" class="form-control">
                 <input type="hidden" id="lon" name="lon" class="form-control">

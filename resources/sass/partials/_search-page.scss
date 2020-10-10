@@ -1,0 +1,69 @@
+.cs-search-input{
+
+  .cs-city{
+    padding: 25px;
+    border-radius: 50px;
+  }
+
+  .cs-btn-search{
+
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: none;
+
+    &:hover{
+      transition: 0.2s;
+    }
+
+    a {
+      color: white;
+
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+  .cs-filters{
+
+    .row{
+      margin: 10px 0;
+    }
+
+    select,input {
+      border: none;
+      border-bottom: 1px solid $sub_color_hover;
+    }
+
+    .cs-sec-input{
+      input{
+        min-width: 200px;
+      }
+    }
+
+    .cs-single-service{
+      margin-top: 5px;
+
+      label {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+#filters{
+  cursor: pointer;
+  // transition: all 2s ease;
+
+  #arrow{
+    padding-left: 5px;
+  }
+
+  &:hover{
+
+    #arrow{
+      padding-left: 10px;
+      transition: 0.2s ease;
+    }
+  }
+}

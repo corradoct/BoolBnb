@@ -5,17 +5,14 @@
 
 
   input{
-    padding: 25px 25px;
+    padding: 25px;
     border-radius: 50px;
-
-    &:focus{
-    }
   }
 
   .cs-btn-search{
 
-    margin-left: 25px;
-
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     border: none;
 
@@ -31,6 +28,4 @@
       }
     }
   }
-
-
 }

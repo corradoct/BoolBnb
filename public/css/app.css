@@ -11022,12 +11022,13 @@ footer .cs-bottom-footer .cs-legal {
 }
 
 .cs-input input {
-  padding: 25px 25px;
+  padding: 25px;
   border-radius: 50px;
 }
 
 .cs-input .cs-btn-search {
-  margin-left: 25px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   border: none;
 }
@@ -11042,6 +11043,65 @@ footer .cs-bottom-footer .cs-legal {
 
 .cs-input .cs-btn-search a:hover {
   text-decoration: none;
+}
+
+.cs-search-input .cs-city {
+  padding: 25px;
+  border-radius: 50px;
+}
+
+.cs-search-input .cs-btn-search {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: none;
+}
+
+.cs-search-input .cs-btn-search:hover {
+  transition: 0.2s;
+}
+
+.cs-search-input .cs-btn-search a {
+  color: white;
+}
+
+.cs-search-input .cs-btn-search a:hover {
+  text-decoration: none;
+}
+
+.cs-search-input .cs-filters .row {
+  margin: 10px 0;
+}
+
+.cs-search-input .cs-filters select,
+.cs-search-input .cs-filters input {
+  border: none;
+  border-bottom: 1px solid #333333;
+}
+
+.cs-search-input .cs-filters .cs-sec-input input {
+  min-width: 200px;
+}
+
+.cs-search-input .cs-filters .cs-single-service {
+  margin-top: 5px;
+}
+
+.cs-search-input .cs-filters .cs-single-service label {
+  margin-left: 5px;
+}
+
+#filters {
+  cursor: pointer;
+}
+
+#filters #arrow {
+  padding-left: 5px;
+}
+
+#filters:hover #arrow {
+  padding-left: 10px;
+  transition: 0.2s ease;
 }
 
 body {
