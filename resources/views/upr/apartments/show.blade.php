@@ -4,36 +4,45 @@
   <section class="justify-content-around cs-space">
     <div class="container">
       <div class="row">
-        <div class="col-12">
-          @if ($apartment->sponsorships->isEmpty() || $apartment->sponsorships[0]->pivot->end_date < $now)
-            <div class="sponsor">
-              <h2>Rendi il tuo annuncio più visibile</h2>
-              <div class="box">
-                <form class="" action="{{ route('upr.sponsorship', $apartment) }}" method="post">
-                  @csrf
-                  @method ('POST')
-                  <div class="chekboxes">
-                    <span>Pacchetti:</span>
-                    @foreach ($sponsorships as $sponsorship)
-                      <div>
-                        <input type="radio" name="sponsorships" value="{{ $sponsorship->id }}">
-                        <label>{{$sponsorship->name}} - {{ $sponsorship->price }} € - {{ $sponsorship->duration }} ore</label>
-                      </div>
-                    @endforeach
-                  </div>
-                  <div class="">
-                    <button type="submit" name="button">Sponsorizza</button>
-                  </div>
-                </form>
-              </div>
+        @if ($apartment->sponsorships->isEmpty() || $apartment->sponsorships[0]->pivot->end_date < $now)
+          <div class="col-6 sponsor">
+            <h2>Rendi il tuo annuncio più visibile</h2>
+            <div class="box">
+              <form class="" action="{{ route('upr.sponsorship', $apartment) }}" method="post">
+                @csrf
+                @method ('POST')
+                <div class="chekboxes">
+                  <input id="controll" type="hidden" name="controll" value="" required>
+                  <span>Pacchetti:</span>
+                  @foreach ($sponsorships as $sponsorship)
+                    <div>
+                      <input type="radio" name="sponsorships" value="{{ $sponsorship->id }}" required>
+                      <label>{{$sponsorship->name}} - {{ $sponsorship->price }} € - {{ $sponsorship->duration }} ore</label>
+                    </div>
+                  @endforeach
+                </div>
+                <div class="">
+                  <div id="dropin-container"></div>
+                  <button  id="submit-button">Request payment method</button>
+                  {{-- <button type="submit" name="button">Sponsorizza</button> --}}
+                </div>
+              </form>
             </div>
+          </div>
+          {{-- <div class="col-6 payments">
+            <div id="dropin-container"></div>
+            <button id="submit-button">Request payment method</button>
+          </div> --}}
           @else
-            <div class="">
-              <h2>Appartamento sponsorizzato</h2>
-              <h3>Pacchetto scelto: {{ $apartment->sponsorships[0]->name }}</h3>
-            </div>
-          @endif
+          <div class="col-12">
+            <h2>Appartamento sponsorizzato</h2>
+            <h3>Pacchetto scelto: {{ $apartment->sponsorships[0]->name }}</h3>
+          </div>
+        @endif
+      </div>
 
+      <div class="row">
+        <div class="col-12">
           <h1>Appartamento {{ $apartment->id }}</h1>
 
           <div class="">
@@ -112,5 +121,27 @@
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiY29ycmFkb2N0IiwiYSI6ImNrZm51YmF0NDBlZTQyeW9lYmpyNGpzcGYifQ.A43eZmLSH1fCHbMCGtG_Zg'
     }).addTo(mymap);
+  </script>
+
+  <script>
+  var button = document.querySelector('#submit-button');
+    braintree.dropin.create({
+      authorization: "{{ 'sandbox_jy53jcts_tvwv7hhb2mh8pyqf' }}",
+      container: '#dropin-container'
+    },
+    function (createErr, instance) {
+      $('#submit-button').on('click', function () {
+        instance.requestPaymentMethod(function (err, payload) {
+          $.get('{{ route('upr.payment.make') }}', {payload}, function (response) {
+            if (response.success) {
+              $('#controll').val('1');
+            } else {
+              alert('Payment failed');
+            }
+          },
+          'json');
+        });
+      });
+    });
   </script>
 @endsection

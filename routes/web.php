@@ -29,6 +29,7 @@ Route::prefix('upr')
       Route::get('/messages/{apartment}', 'ApartmentController@message')->name('message');
       Route::put('apartments/{apartment}', 'ApartmentController@sospend')->name('sospend');
       Route::post('apartments/{apartment}', 'ApartmentController@sponsorship')->name('sponsorship');
+      Route::get('/payment/make', 'PaymentController@make')->name('payment.make');
     });
 
 // routes per gli utenti non registrati

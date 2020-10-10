@@ -41,7 +41,7 @@
      #mapid-search { height: 600px; width: 600px; }
    </style>
 </head>
-  <body onload="searchApartments()">
+  <body onload="searchPromo(); searchApartments();">
     <div id="app">
       <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
@@ -183,6 +183,21 @@
         </section>
         <!-- End Search Section -->
 
+        <!-- Apartment Promo Section -->
+        <section>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <!-- Search Result Container -->
+                <!-- >> Handlebars will print its template here -->
+                <div id="apartment_list_promo" style="background-color:yellow;"></div>
+                <!-- End Search Result Container -->
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- End Apartment Promo Section -->
+
         <!-- Apartment Result Section -->
         <section>
           <div class="container">
@@ -275,6 +290,28 @@
        });
     });
 
+    function searchPromo() {
+      var sponsors = 1;
+      var active = 1;
+
+      $.ajax(
+       {
+         url: 'http://127.0.0.1:8000/api/search',
+         method: 'GET',
+         data: {
+           sponsors: sponsors,
+           active: active,
+         },
+         success: function(dataResponse) {
+           printHandlebarsPromo(dataResponse);
+         },
+         error: function() {
+           alert('error');
+         }
+       }
+     );
+    }
+
     function searchApartments() {
       var active = 1;
       var lat = $('#lat').val();
@@ -319,7 +356,6 @@
              seaView: seaView,
            },
            success: function(dataResponse) {
-             // console.log(dataResponse);
              printHandlebars(dataResponse);
              $('#mapid').remove();
              $('.containerMap').html('<div id="mapid"></div>');
@@ -337,25 +373,44 @@
 
     <script>
       function printHandlebars(dataResponse) {
+        // console.log(dataResponse);
         $('#apartment_list').html('');
 
         var allApartments = dataResponse.noPromo;
-        // console.log(allApartments.length);
 
         var source = $("#apartment-template").html();
-        // console.log(source);
         var template = Handlebars.compile(source);
 
         if (allApartments.length != 0) {
           for (var i = 0; i < allApartments.length; i++) {
             var thisApartment = allApartments[i];
-            // console.log(thisApartment.lat);
 
             var html = template(thisApartment);
             $('#apartment_list').append(html);
           }
         } else {
           $('#apartment_list').html('<h2>Non ci sono appartamenti corrispondenti alla ricerca</h2>');
+        }
+      }
+
+      function printHandlebarsPromo(dataResponse) {
+        // console.log(dataResponse);
+        $('#apartment_list_promo').html('');
+
+        var allApartments = dataResponse.promo;
+
+        var source = $("#apartment-template").html();
+        var template = Handlebars.compile(source);
+
+        if (allApartments.length != 0) {
+          for (var i = 0; i < allApartments.length; i++) {
+            var thisApartment = allApartments[i];
+
+            var html = template(thisApartment);
+            $('#apartment_list_promo').append(html);
+          }
+        } else {
+          $('#apartment_list_promo').html('<h2>Non ci sono appartamenti sponsorizzati</h2>');
         }
       }
     </script>
@@ -369,7 +424,7 @@
       var longitude = $('#lon').val();
       var mymap = L.map('mapid').setView([latitude, longitude], 10);
       var data = dataResponse.noPromo;
-      console.log(data);
+      // console.log(data);
       for (var i = 0; i < data.length; i++) {
         var thisMarker = data[i];
         var marker = L.marker([ thisMarker.lat  ,   thisMarker.lon  ]).addTo(mymap);

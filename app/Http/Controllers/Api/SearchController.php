@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use App\Apartment;
+use App\Sponsorship;
 
 class SearchController extends Controller
 {
@@ -25,6 +26,9 @@ class SearchController extends Controller
     $reception = $request->input('reception');
     $sauna = $request->input('sauna');
     $seaView = $request->input('seaView');
+    $sponsors = $request->input('sponsors');
+    // $silver = $request->input('silver');
+    // $gold = $request->input('gold');
 
     $params = [
             "maxLat" => $lat + rad2deg($rad/$R),
@@ -34,6 +38,7 @@ class SearchController extends Controller
         ];
 
     $querySuite = Apartment::query();
+    $querySuitePromo = Apartment::query();
 
     $querySuite->whereBetween('lat', [$params['minLat'], $params['maxLat']])->orderBy('lat', 'ASC');
     $querySuite->whereBetween('lon', [$params['minLon'], $params['maxLon']]);
@@ -86,7 +91,35 @@ class SearchController extends Controller
       $querySuite->where('beds', "=", $beds);
     }
 
+    // $querySuitePromo->whereBetween('lat', [$params['minLat'], $params['maxLat']])->orderBy('lat', 'ASC');
+    // $querySuitePromo->whereBetween('lon', [$params['minLon'], $params['maxLon']]);
+
+    if ($sponsors) {
+      $querySuitePromo->whereHas('sponsorships', function (Builder $sponsor) {
+        $sponsor->where('sponsorship_id', '>', '0');
+      });
+    }
+
+
+    // if ($silver == '2') {
+    //   $querySuitePromo->whereHas('sponsorships', function (Builder $saro) {
+    //     $saro->where('sponsorship_id', '=', '2');
+    //   });
+    // }
+    //
+    // if ($gold == '3') {
+    //   $querySuitePromo->whereHas('sponsorships', function (Builder $saro) {
+    //     $saro->where('sponsorship_id', '=', '3');
+    //   });
+    // }
+
+    if ($active) {
+      $querySuitePromo->where('active', "=", 1);
+    }
+
     $noPromo = $querySuite->get();
-        return response()->json(compact('noPromo'));
+    $promo = $querySuitePromo->get();
+
+        return response()->json(compact('noPromo', 'promo'));
   }
 }
