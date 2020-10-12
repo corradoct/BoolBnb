@@ -1,6 +1,15 @@
 .card{
+  box-shadow: 5px 5px lightgray;
   .card-img-top{
     border-radius: 25px 25px 0 0 !important;
+    height: 250px;
+
+  }
+  p {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   border-radius: 25px !important;
 }

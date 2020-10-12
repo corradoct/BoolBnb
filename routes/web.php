@@ -27,7 +27,7 @@ Route::prefix('upr')
     ->group(function () {
       Route::resource('apartments', 'ApartmentController');
       Route::get('/messages/{apartment}', 'ApartmentController@message')->name('message');
-      Route::put('apartments/{apartment}', 'ApartmentController@sospend')->name('sospend');
+      Route::put('sospend/{apartment}', 'ApartmentController@sospend')->name('sospend');
       Route::post('apartments/{apartment}', 'ApartmentController@sponsorship')->name('sponsorship');
       Route::get('/payment/make', 'PaymentController@make')->name('payment.make');
     });

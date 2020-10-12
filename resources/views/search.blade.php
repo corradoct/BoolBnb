@@ -36,10 +36,6 @@
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" charset="utf-8"></script>
 
-    <style media="screen">
-     #mapid { height: 400px; width: 400px; }
-     #mapid-search { height: 600px; width: 600px; }
-   </style>
 </head>
   <body onload="searchPromo(); searchApartments();">
     <div id="app">
@@ -143,7 +139,7 @@
                         <div class="row cs-rooms d-flex col-12 col-sm-6 justify-content-between">
 
                           <!-- Distance -->
-                          <div class="">
+                          <div class="col-lg-4 col-sm-12">
                             <label for="radius">Distanza:</label>
                             <select id="radius" class="" name="radius">
                               <option value="20">20km</option>
@@ -153,12 +149,12 @@
                           </div>
 
                           <!-- Rooms -->
-                          <div class="cs-sec-input">
+                          <div class="col-lg-4 col-sm-12 cs-sec-input">
                             <input id="rooms" min="1" max="10" type="number" name="rooms" value="" placeholder="Inserisci le stanze">
                           </div>
 
                           <!-- Baths -->
-                          <div class="cs-sec-input">
+                          <div class="col-lg-4 col-sm-12 cs-sec-input">
                             <input id="beds" min="1" max="10" type="number" name="beds" value="" placeholder="Inserisci i letti">
                           </div>
                         </div>
@@ -220,12 +216,15 @@
 
         <!-- Apartment Promo Section -->
         <section>
-          <div class="container">
+          <div class="container-full cs-search-promo">
             <div class="row">
               <div class="col-12">
+
                 <!-- Search Result Container -->
                 <!-- >> Handlebars will print its template here -->
-                <div id="apartment_list_promo" style="background-color:yellow;"></div>
+                <div id="apartment_list_promo">
+
+                </div>
                 <!-- End Search Result Container -->
               </div>
             </div>
@@ -237,22 +236,13 @@
         <section>
           <div class="container">
             <div class="row">
-              <div class="col-12">
+              <div class="col-lg-4 col-sm-12">
                 <!-- Search Result Container -->
                 <!-- >> Handlebars will print its template here -->
                 <div id="apartment_list"></div>
                 <!-- End Search Result Container -->
               </div>
-            </div>
-          </div>
-        </section>
-        <!-- End Apartment Result Section -->
-
-        <!-- Map Section -->
-        <section>
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
+              <div class="col-lg-8 col-sm-12">
                 <div class="containerMap">
                   <!-- Map Container -->
                   <div id="mapid"></div>
@@ -261,6 +251,16 @@
             </div>
           </div>
         </section>
+        <!-- End Apartment Result Section -->
+
+        <!-- Map Section -->
+        {{-- <section>
+          <div class="container">
+            <div class="row">
+
+            </div>
+          </div>
+        </section> --}}
         <!-- End Apartment Result Section -->
       </main>
       @include('layouts.partials.footer')
@@ -300,7 +300,7 @@
         <!-- Apartment Infos -->
         <div class="card-body d-flex flex-column">
           <!-- Apartment Title -->
-          <h5 class="card-title text-center">Titolo : @{{ title }}</h5>
+          <h5 class="card-title text-center">@{{ title }}</h5>
           <!-- Apartment Description -->
           <p class="card-text">@{{ description }}</p>
           <!-- Apartment Address -->
@@ -474,7 +474,7 @@
       }
 
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       id: 'mapbox/streets-v11',
       tileSize: 512,

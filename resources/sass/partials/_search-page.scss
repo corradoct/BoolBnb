@@ -25,9 +25,14 @@
     }
   }
   .cs-filters{
+    .col-sm-6 {
+      max-width: 100%;
+    }
 
     .row{
       margin: 10px 0;
+
+
     }
 
     select,input {
@@ -67,3 +72,50 @@
     }
   }
 }
+
+.cs-search-promo {
+  margin: 20px 0;
+
+  .row {
+    margin: 0;
+  }
+
+  .col-12 {
+    padding: 0;
+  }
+
+  #apartment_list_promo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: $sponsored;
+  }
+}
+
+#mapid {
+  width: 100%;
+  height: 1200px;
+  border-radius: 20px;
+  box-shadow: 5px 5px lightgray;
+}
+
+@media (max-width: 767.98px) {
+  .card {
+    margin: auto;
+  }
+   #mapid {
+     // display: none;
+     height: 300px;
+     display: block;
+   }
+   .cs-sec-input {
+     margin-top: 5px;
+   }
+ }
+
+ @media (max-width: 1199.98px) {
+   #apartment_list_promo {
+     flex-wrap: wrap;
+   }
+
+  }

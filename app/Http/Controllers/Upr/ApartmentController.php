@@ -153,7 +153,7 @@ class ApartmentController extends Controller
     }
     $apartment->update($request_data);
 
-    $apartment->update($request_data);
+    $apartment->save();
 
 
 

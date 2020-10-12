@@ -10900,11 +10900,20 @@ a.text-dark:focus {
 }
 
 .card {
+  box-shadow: 5px 5px lightgray;
   border-radius: 25px !important;
 }
 
 .card .card-img-top {
   border-radius: 25px 25px 0 0 !important;
+  height: 250px;
+}
+
+.card p {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cs-btn {
@@ -11028,7 +11037,6 @@ footer .cs-bottom-footer .cs-legal {
 
 .cs-input .cs-btn-search {
   height: 50px;
-  width: 50px;
   border-radius: 50%;
   border: none;
 }
@@ -11069,6 +11077,10 @@ footer .cs-bottom-footer .cs-legal {
   text-decoration: none;
 }
 
+.cs-search-input .cs-filters .col-sm-6 {
+  max-width: 100%;
+}
+
 .cs-search-input .cs-filters .row {
   margin: 10px 0;
 }
@@ -11104,6 +11116,269 @@ footer .cs-bottom-footer .cs-legal {
   transition: 0.2s ease;
 }
 
+.cs-search-promo {
+  margin: 20px 0;
+}
+
+.cs-search-promo .row {
+  margin: 0;
+}
+
+.cs-search-promo .col-12 {
+  padding: 0;
+}
+
+.cs-search-promo #apartment_list_promo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #F7CE68;
+}
+
+#mapid {
+  width: 100%;
+  height: 1200px;
+  border-radius: 20px;
+  box-shadow: 5px 5px lightgray;
+}
+
+@media (max-width: 767.98px) {
+  .card {
+    margin: auto;
+  }
+
+  #mapid {
+    height: 300px;
+    display: block;
+  }
+
+  .cs-sec-input {
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  #apartment_list_promo {
+    flex-wrap: wrap;
+  }
+}
+
+.form-line {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .chekboxes.form-line {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .form-line {
+    display: block;
+  }
+}
+
+.card-show {
+  background-color: rgba(245, 245, 245, 0.4);
+  box-shadow: 0px 5px 29px -8px rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.card-show.upr {
+  background-color: #ffd429;
+  width: 80%;
+  margin-left: -31px;
+}
+
+.card-show .sponsor {
+  padding: 0px 85px;
+}
+
+.card-show .sponsor .chekboxes {
+  margin-top: 34px;
+}
+
+.card-show .sponsor .chekboxes .payment-check {
+  margin-top: 15px;
+}
+
+.card-show .sponsor .btn {
+  margin-top: 25px;
+}
+
+.card-show .container-photo {
+  padding: 15px;
+  border-top-left-radius: 20px;
+}
+
+.card-show .container-photo .photo-show {
+  width: 75%;
+  height: 310px;
+}
+
+.card-show .container-photo .photo-show img {
+  height: 100%;
+  border-radius: 20px;
+  box-shadow: 0px 1px 11px -2px rgba(0, 0, 0, 0.4);
+}
+
+.card-show .description-show {
+  padding: 10px;
+  word-break: break-all;
+}
+
+.card-show .apartment-feature .feat-1 {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.card-show .apartment-feature .feat-1 li {
+  margin: 2px 11px;
+  list-style-type: none;
+}
+
+.card-show .apartment-feature .service-1 {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.card-show .apartment-feature .service-1 li {
+  margin: 0px 11px;
+  list-style-type: none;
+}
+
+.card-show .email-contact {
+  width: 100%;
+  height: 350px;
+  padding: 10px;
+  text-align: center;
+}
+
+.card-show .email-contact #emailMessage {
+  background: white;
+  border: 3px solid #e4e4e4;
+  height: 30px;
+  width: 250px;
+  border-radius: 10px;
+  padding: 15px 15px;
+  color: #3F3F3F;
+  font-size: 16px;
+  outline: 0;
+  margin-top: 17px;
+}
+
+.card-show .email-contact #textMessage {
+  background: white;
+  border: 3px solid #e4e4e4;
+  height: 158px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 250px;
+  border-radius: 10px;
+  padding: 15px 15px;
+  color: #3F3F3F;
+  font-size: 16px;
+  outline: 0;
+  resize: none;
+}
+
+#mapid-show {
+  height: 310px;
+  border-radius: 20px;
+  margin-top: 0px;
+  margin-left: -55px;
+  box-shadow: 0px 1px 11px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* The Modal (background) */
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 991px) {
+  #sponsor {
+    margin: 0 auto;
+  }
+
+  .my-apartment {
+    margin-top: 20px;
+  }
+
+  #mapid-show {
+    height: 310px;
+    border-radius: 20px;
+    margin-top: 0px;
+    margin-left: -15px;
+    box-shadow: 0px 1px 11px -2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .new-margin {
+    margin-bottom: 8px;
+  }
+}
+
 body {
   font-family: "Futura", sans-serif;
 }
@@ -11127,17 +11402,35 @@ nav .dropdown-item {
   color: black !important;
 }
 
+main #jumbo {
+  background-image: url("/asset/img/arredamento.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+main #jumbo .layer {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+main #jumbo .layer .height-center {
+  padding-top: 35vh;
+}
+
 main .cs-space {
   padding: 10vh 0;
 }
 
 main .cs-search {
-  padding: 30vh 0;
+  height: 85vh;
 }
 
 main .cs-search h1 {
   font-weight: bold;
   margin: 50px 0;
+  color: papayawhip;
 }
 
 main .cs-sponsored {
@@ -11153,6 +11446,7 @@ main .cs-sponsored h3 {
 
 main .cs-sponsored .row {
   margin: 50px 0;
+  flex-wrap: nowrap;
 }
 
 main .cs-apartment {
@@ -11165,5 +11459,11 @@ main .cs-back a {
 
 main .cs-back a:hover {
   text-decoration: none;
+}
+
+@media (max-width: 1199.98px) {
+  main .cs-sponsored .row {
+    flex-wrap: wrap;
+  }
 }
 

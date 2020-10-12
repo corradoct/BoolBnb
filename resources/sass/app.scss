@@ -20,6 +20,15 @@
 // Search Page
 @import 'partials/search-page';
 
+// create
+@import 'partials/create';
+
+// show
+@import 'partials/show';
+
+// dashboard
+@import 'partials/dashboard';
+
 body{
   font-family: "Futura", sans-serif;
 }
@@ -48,16 +57,36 @@ nav{
 }
 
 main{
+  #jumbo {
+
+    background-image: url("/asset/img/arredamento.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    .layer {
+      width: 100%;
+      height: 100%;
+      background-color:rgba(0, 0, 0, 0.4);
+
+      .height-center {
+        padding-top: 35vh;
+
+      }
+    }
+  }
   .cs-space{
     padding: 10vh 0;
   }
 
   .cs-search{
-    padding: 30vh 0;
+    // padding: 30vh 0;
+    height: 85vh;
 
     h1{
       font-weight: bold;
       margin: 50px 0;
+      color:papayawhip;
     }
 
   }
@@ -74,6 +103,7 @@ main{
 
     .row{
       margin: 50px 0;
+      flex-wrap: nowrap;
     }
   }
 
@@ -92,3 +122,14 @@ main{
   }
 
 }
+
+@media (max-width: 1199.98px) {
+  main {
+    .cs-sponsored {
+      .row {
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+ }

@@ -42,6 +42,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
     {{-- Style map --}}
     <style media="screen">
      #mapid { height: 400px; width: 400px; }
@@ -50,7 +52,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="fixed-top navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img id="logo" src="{{ asset('storage/images/logo.png')}}" alt="Airbnb Logo">
