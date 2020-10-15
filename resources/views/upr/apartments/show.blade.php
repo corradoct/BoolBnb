@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
   {{-- start section --}}
   <section class="justify-content-around cs-space">
     <div class="container">
@@ -132,7 +133,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-6 col-sm-12">
+        <div class="col-lg-6 col-sm-12">
           <canvas id="myChart"></canvas>
         </div>
       </div>
@@ -217,7 +218,7 @@
               yAxes: [{
                   ticks: {
                       suggestedMin: 10,
-                      suggestedMax: 30
+                      suggestedMax: 100
                   }
               }]
           }
