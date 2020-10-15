@@ -1,4 +1,4 @@
-<p align="center"><a href="https://corradoct.github.io/BoolBnb/" target="_blank">BoolBnb</a></p>
+<h1 align="center"><a href="https://corradoct.github.io/BoolBnb/" target="_blank">BoolBnb</a></h1>
 
 <p align="center">
 Complete Laravel application based on Airbnb
