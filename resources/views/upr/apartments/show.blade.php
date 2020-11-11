@@ -196,35 +196,35 @@
   ?>
 
   <script>
-  $(document).ready(function () {
-    var pie = [{ value: parseInt(<?PHP echo $counter ?>) }]
-    var visit = pie[0]['value'];
-    showGraph(visit);
-  });
-
-  function showGraph(visit) {
-    var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          datasets: [{
-              label: 'Visit',
-              data: [0, visit],
-          }],
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'September', 'October', 'November', 'December']
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      suggestedMin: 10,
-                      suggestedMax: 100
-                  }
-              }]
-          }
-      }
-    });
-  }
+  // $(document).ready(function () {
+    // var pie = [{ value: parseInt(<?PHP  ?>) }]
+  //   var visit = pie[0]['value'];
+  //   showGraph(visit);
+  // });
+  //
+  // function showGraph(visit) {
+  //   var ctx = document.getElementById('myChart');
+  //   var myChart = new Chart(ctx, {
+  //     type: 'line',
+  //     data: {
+  //         datasets: [{
+  //             label: 'Visit',
+  //             data: [0, visit],
+  //         }],
+  //         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'September', 'October', 'November', 'December']
+  //     },
+  //     options: {
+  //         scales: {
+  //             yAxes: [{
+  //                 ticks: {
+  //                     suggestedMin: 10,
+  //                     suggestedMax: 100
+  //                 }
+  //             }]
+  //         }
+  //     }
+  //   });
+  // }
 
   </script>
 @endsection
