@@ -42,7 +42,8 @@
       <nav class="fixed-top navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
           <a class="navbar-brand" href="{{ url('/') }}">
-              <img id="logo" src="{{ asset('storage/images/logo.png')}}" alt="Airbnb Logo">
+            <span>CorradpBnb</span>
+              {{-- <img id="logo" src="{{ asset('storage/images/logo.png')}}" alt="Airbnb Logo"> --}}
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
               <span class="navbar-toggler-icon"></span>
